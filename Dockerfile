@@ -69,6 +69,7 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
 
 # Install Tini init system
 RUN apk add --no-cache tini
+
 USER node
 
 ENTRYPOINT ["/sbin/tini", "--"]
