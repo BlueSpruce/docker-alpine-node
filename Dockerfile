@@ -73,5 +73,4 @@ RUN apk add --no-cache tini
 USER node
 
 ENTRYPOINT ["/sbin/tini", "--"]
-
 #CMD [ "node" ]
