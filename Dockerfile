@@ -4,7 +4,7 @@ FROM alpine:3.6
 ENV VERSION=v8.3.0 NPM_VERSION=5 YARN_VERSION=latest
 
 # For base builds
-ENV CONFIG_FLAGS="--fully-static --without-npm" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
+#ENV CONFIG_FLAGS="--fully-static --without-npm" DEL_PKGS="libstdc++" RM_DIRS=/usr/include
 
 RUN addgroup -g 1000 node && adduser -u 1000 -G node -s /bin/sh -D node
 
@@ -48,6 +48,22 @@ RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnup
 
 # Install Tini init system
 RUN apk add --no-cache tini
+
+# Setup File System
+RUN mkdir -p /svc/app && \
+    mkdir -p /svc/configs && \
+    mkdir -p /svc/data && \
+    mkdir -p /svc/logs && \
+    chmod 0700 /svc/app && \
+    chmod 0700 /svc/configs && \
+    chmod 0700 /svc/data && \
+    chmod 0700 /svc/logs && \
+    chown node:node /svc/app && \
+    chown node:node /svc/configs && \
+    chown node:node /svc/data && \
+    chown node:node /svc/logs
+
+WORKDIR /svc/app
 
 USER node
 
